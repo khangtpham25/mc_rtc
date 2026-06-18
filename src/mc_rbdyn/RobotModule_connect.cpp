@@ -520,7 +520,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   // won't be exactly identical to the one generated here
   {
     std::string module_yaml = fmt::format("{}/{}.yaml", out.path, out.name);
-    out._parameters = {"json", module_yaml};
+    out._parameters = {out.name, module_yaml};
     // FIXME: we should also generate the merged real_urdf,
     // use the control urdf as a substitute for now
     out._real_urdf = out.urdf_path;
@@ -830,7 +830,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
     std::string module_yaml = fmt::format("{}/{}.yaml", out.path, out.name);
     auto yaml = mc_rtc::ConfigurationLoader<mc_rbdyn::RobotModule>::save(out, false, {}, out.mb.joint(0).dof() == 0);
     yaml.save(module_yaml);
-    out._parameters = {"json", module_yaml};
+    out._parameters = {out.name, module_yaml};
     mc_rtc::log::info("Disconnection done, result module in: {}", module_yaml);
   }
 
